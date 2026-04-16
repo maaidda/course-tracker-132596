@@ -1,4 +1,5 @@
 import './App.css'
+import StudentCard from "./components/StudentCard.jsx";
 
 function App() {
   const courses = [
@@ -36,14 +37,7 @@ function App() {
       <h2>The courses that I have enrolled this semester:</h2>
 
         {courses.map((course) => (
-            <div key={course.id} className="course">
-              <p>ID: {course.id}</p>
-              <p>Name: {course.name}</p>
-              <p>Credits: {course.credits}</p>
-              <p>Grade: {course.grade}</p>
-              <p>Attending: {course.attending ? "Yes" : "No"}</p>
-              <p>Difficulty: {course.difficulty}</p>
-            </div>
+            <StudentCard key={course.id} course={course}/>
         ))}
       </div>
   );
