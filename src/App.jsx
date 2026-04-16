@@ -1,8 +1,10 @@
 import './App.css'
 import StudentCard from "./components/StudentCard.jsx";
+import {useState} from "react";
+import RegisterCourse from "./components/RegisterCourse.jsx";
 
 function App() {
-  const courses = [
+  const [courses, setCourses] = useState([
     {
       id: 123,
       name: "Operating System",
@@ -27,7 +29,20 @@ function App() {
       attending: false,
       difficulty: "Easy",
     },
-  ];
+  ]);
+
+  const handleRegister = (newCourse) => {
+    const courseToAdd = {
+      id: courses.length + 1,
+      name: newCourse.name,
+      credits: newCourse.credits,
+      grade: newCourse.grade * 10,
+      attending: newCourse.attending,
+      difficulty: newCourse.difficulty,
+    };
+
+    setCourses([...courses, courseToAdd]);
+  };
 
   return (
       <div>
@@ -39,6 +54,9 @@ function App() {
         {courses.map((course) => (
             <StudentCard key={course.id} course={course}/>
         ))}
+
+        <h2>Register a new course!</h2>
+        <RegisterCourse onRegister={handleRegister} />
       </div>
   );
 }
