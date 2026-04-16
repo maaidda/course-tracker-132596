@@ -19,4 +19,4 @@ function StudentCard({ course }) {
         </div>
     );
 }
-export default StudentCard;
+export default StudentCard

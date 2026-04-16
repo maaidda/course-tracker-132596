@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useRef, useState} from "react";
 
 function RegisterCourse({ onRegister }) {
     const [name, setName] = useState("");
@@ -8,11 +8,14 @@ function RegisterCourse({ onRegister }) {
     const [difficulty, setDifficulty] = useState("Easy");
     const [error, setError] = useState("");
 
+    const nameInputRef = useRef(null);
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (name.trim() === "") {
             setError("Course name cannot be empty.");
+            nameInputRef.current.focus();
             return;
         }
 
@@ -40,11 +43,13 @@ function RegisterCourse({ onRegister }) {
         setGrade("");
         setAttending(false);
         setDifficulty("Easy");
+        nameInputRef.current.focus();
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <input
+                ref={nameInputRef}
                 type="text"
                 placeholder="Course name"
                 value={name}
@@ -71,7 +76,7 @@ function RegisterCourse({ onRegister }) {
                     checked={attending}
                     onChange={(e) => setAttending(e.target.checked)}
                 />
-                Attending regularly
+                Attending
             </label>
 
             <select
@@ -84,9 +89,11 @@ function RegisterCourse({ onRegister }) {
             </select>
 
             <button type="submit">Register</button>
+
             {error && <p>{error}</p>}
+
         </form>
     );
 }
 
-export default RegisterCourse;
+export default RegisterCourse

@@ -1,12 +1,12 @@
 import './App.css'
 import StudentCard from "./components/StudentCard.jsx";
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import RegisterCourse from "./components/RegisterCourse.jsx";
 
 function App() {
   const [courses, setCourses] = useState([
     {
-      id: 123,
+      id: 1,
       name: "Operating System",
       credits: 6,
       grade: 80,
@@ -14,7 +14,7 @@ function App() {
       difficulty: "Moderate",
     },
     {
-      id: 456,
+      id: 2,
       name: "Client-Side Programming",
       credits: 6,
       grade: 90,
@@ -22,7 +22,7 @@ function App() {
       difficulty: "Hard",
     },
     {
-      id: 789,
+      id: 3,
       name: "Applied Probability and Statistics",
       credits: 6,
       grade: 100,
@@ -31,18 +31,21 @@ function App() {
     },
   ]);
 
-  const handleRegister = (newCourse) => {
-    const courseToAdd = {
-      id: courses.length + 1,
-      name: newCourse.name,
-      credits: newCourse.credits,
-      grade: newCourse.grade * 10,
-      attending: newCourse.attending,
-      difficulty: newCourse.difficulty,
-    };
+  const handleRegister = useCallback((newCourse) => {
+    setCourses(prevCourse => {
+      const courseToAdd = {
+        id: prevCourse.length + 1,
+        name: newCourse.name,
+        credits: newCourse.credits,
+        //I convert 5-10 grade into percentage because the form and course rule use different grading scales.
+        grade: newCourse.grade * 10,
+        attending: newCourse.attending,
+        difficulty: newCourse.difficulty,
+      };
 
-    setCourses([...courses, courseToAdd]);
-  };
+      return ([...prevCourse, courseToAdd]);
+    });
+  }, []);
 
   return (
       <div>
